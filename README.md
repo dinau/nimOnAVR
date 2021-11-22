@@ -1,0 +1,330 @@
+<!-- TOC -->
+
+- [Nim On AVR](#nim-on-avr)
+    - [Nim language test program for Arduino UNO/Nano or its compatibles.](#nim-language-test-program-for-arduino-unonano-or-its-compatibles)
+        - [Prerequisite](#prerequisite)
+        - [Example1](#example1)
+            - [**led** folder](#led-folder)
+            - [**nimOnArduino** folder](#nimonarduino-folder)
+            - [**uart** folder](#uart-folder)
+            - [**uartled** folder](#uartled-folder)
+        - [Example2](#example2)
+            - [**intrtest** folder](#intrtest-folder)
+            - [**sc\card** folder](#sc\card-folder)
+
+  
+
+#                            Nim On AVR
+##    Nim language test program for Arduino UNO/Nano or its compatibles.
+
+### Prerequisite
+* nim-1.6.0 or nim-1.4.8 (https://nim-lang.org/install.html)  
+    * **Important**:  
+        * It must be used above nim version otherwise it won't work well.
+* avr-gcc v7.3.0 (inclued in arduino-1.8.16 IDE)  
+    * For example, if on windows set executable path to  
+         **d:\arduino-1.8.16\hardware\tools\avr\bin**  
+* make,rm and etc Linux tool commands
+* cmake version 3.13 or later  
+
+### Example1
+#### **led** folder
+* Simple <span style="color: darkgreen; ">LED</span> blinker program.  
+
+        $ cd example1/led  
+        $ make
+
+* Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.BUILD</span> folder.
+* Code: src/main.nim
+
+    ```nim
+    import iom328p,delay
+
+    # LED setting
+    proc led_setup() = DDRB.b5  = 1
+    proc led_on()    = PORTB.b5 = 1
+    proc led_off()   = PORTB.b5 = 0
+
+    # main program
+    proc main() =
+        led_setup()
+        while true:
+            led_on()
+            wait_ms(1000)
+            led_off()
+            wait_ms(1000)
+
+    main()
+    ```
+* Upload(write to Flash) the generated file to Arduino board
+    * For instance Arduino Uno,
+        ```
+        $ make w ARDUINO_VER=1.8.16 COM_PORT=COM5 AVRDUDE_BAUDRATE=115200
+        ```
+        * Variable **ARDUINO_VER, COM_PORT, AVRDUDE_BAUDRATE** must be properly set
+            accoding to your envionment.  
+            See also **led/Makefile**.
+            * cf.
+                ```
+                  Arduino Uno:       AVRDUDE_BAUDRATE=115200
+                  Arduino Nano:      AVRDUDE_BAUDRATE=115200 
+                  Arduino Nano(old): AVRDUDE_BAUDRATE=57600 
+                ```
+        ```  
+        $ make w ARDUINO_VER=1.8.16 COM_PORT=COM5 AVRDUDE_BAUDRATE=57600
+        nim c --passL:"-Wl,-Map=.BUILD/main.map,--cref" src/main
+        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
+        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
+        Hint: used config file 'D:\nim-data\avr\nimOnAVR\example1\led\nim.cfg' [Conf]
+        ........................................................
+        Hint:  [Link]
+        Hint: gc: arc; opt: speed; options: -d:danger
+        24649 lines; 0.680s; 20.715MiB peakmem; proj: src\main; out: D:\nim-data\avr\nimOnAVR\example1\led\.BUILD\main.elf [SuccessX]
+           text    data     bss     dec     hex filename
+            234       0       0     234      ea .BUILD/main.elf
+        D:/arduino-1.8.16/hardware/tools/avr/bin/avrdude.exe -c arduino -C "D:/arduino-1.8.16/hardware/tools/avr/etc/avrdude.conf" -P COM5 \
+                -p m328p -b 57600  -u -e -U flash:w:.BUILD/main.elf:a
+
+        avrdude.exe: AVR device initialized and ready to accept instructions
+
+        Reading | ################################################## | 100% 0.02s
+
+        avrdude.exe: Device signature = 0x1e950f (probably m328p)
+        avrdude.exe: erasing chip
+        avrdude.exe: reading input file ".BUILD/main.elf"
+        avrdude.exe: input file .BUILD/main.elf auto detected as ELF
+        avrdude.exe: writing flash (234 bytes):
+
+        Writing | ################################################## | 100% 0.08s
+
+        avrdude.exe: 234 bytes of flash written
+        avrdude.exe: verifying flash memory against .BUILD/main.elf:
+        avrdude.exe: load data flash data from input file .BUILD/main.elf:
+        avrdude.exe: input file .BUILD/main.elf auto detected as ELF
+        avrdude.exe: input file .BUILD/main.elf contains 234 bytes
+        avrdude.exe: reading on-chip flash data:
+
+        Reading | ################################################## | 100% 0.08s
+
+        avrdude.exe: verifying ...
+        avrdude.exe: 234 bytes of flash verified
+
+        avrdude.exe done.  Thank you.
+    ``` 
+#### **nimOnArduino** folder 
+* Simple <span style="color: darkgreen; ">LED</span> blinker program.  
+    * [Referred from 'Nim on Arduino'](https://disconnected.systems/blog/nim-on-adruino/)
+
+            $ cd example1/nimOnArduino  
+            $ make
+
+    * Code: ./blink.nim
+
+        ```nim
+        {.compile: "led.c".}
+        proc led_setup():   void {.importc.}
+        proc led_on():      void {.importc.}
+        proc led_off():     void {.importc.}
+        proc delay(ms:int): void {.importc.}
+
+        when isMainModule: 
+            led_setup()
+            while true:
+                led_on()
+                delay(1000)
+                led_off()
+                delay(1000)
+            ```
+
+#### **uart** folder
+* Simple <span style="color: darkgreen; ">UART</span> test program with ChaN's xprintf() functions.
+    * Set baudrate 38400bps to your terminal program.
+
+            $ cd example1/uart  
+            $ make
+
+    * Code: src/main.nim
+
+        ```nim
+        ...
+        # UART setting
+        ...
+        # main program
+        proc main() =
+            initUart(mBRate(BAUDRATE))
+            var num = 0
+            while true:
+                xprintf("\n Number = %d", num)
+                xputs("---")
+                num += 1
+                wait_ms(1000)
+        main()
+        ```
+
+#### **uart_led** folder
+* Just mixed <span style="color: darkgreen; ">UART</span> and <span style="color: darkgreen; ">LED</span> blinker test program.
+    * Set baudrate 38400bps to your terminal program.
+
+            $ cd example1/uart_led  
+            $ make
+
+    * Code: src/main.nim
+        ```nim
+        ...
+        # UART setting
+        ...
+        # LED setting
+        proc led_setup() = DDRB.b5  = 1
+        proc led_on()    = PORTB.b5 = 1
+        proc led_off()   = PORTB.b5 = 0
+
+        # main program
+        proc main() =
+            led_setup()
+            initUart(mBRate(BAUDRATE))
+
+            var num = 0
+            while true:
+                led_on()
+                wait_ms(500)
+                led_off()
+                wait_ms(500)
+                xprintf("\n Number = %d", num)
+                xputs("---")
+                num += 1
+        main()
+        ``` 
+### Example2
+####  **intr_test** folder
+* Simple <span style="color: darkgreen; ">Interrupt/SPI/PWM/UART</span> test program with ChaN's xprintf() functions.
+    * Set baudrate 38400bps to your terminal program.
+        ```
+        $ cd example2/intr_test
+        $ make
+        ```
+        * Terminal output:
+            * If you wires D11(MOSI) with D12(MISO), SPI error will be gone away (=>0) because of loopback connection.
+                ```
+                ...
+                [00181]
+                     45504 Hz: PWM [44100 Hz] period interrupt freq.(Approximately)
+                  8282546:     SPI [D11->D12] error count in PWM period interrupt.
+                ...
+                ```
+        * SPI pins
+            * Chip select: D8(PB0) and D4(PD4)
+            * MISO: D12(PB4), MOSI: D11(PB3)
+            * SCK: D13(PB5)
+
+        * If you have oscilloscope, it can be observe PWM signal(period=44.1kHz) at D9,D10 pin.
+    * Code: src/main.nim
+        ```nim
+        # main program
+        proc main() =
+            initPort()
+            initSystick()
+            when UART_INFO:
+                initUart(mBRate(UART_BAUDRATE)) # 38400bps
+            initSpi()                           # SCK=8MHz
+
+            initPwm()                           # PWM setting
+            setPwmPeriod(PWM_FREQ)              # PWM frequency = 44100 Hz
+            enablePwmPeriodIntr()               # Enable PWM period interrupt
+            pwm_period_timer_start()            # PWM period Timer start
+
+            pwm_dutyL(200)                      # D9
+            pwm_dutyR(50)                       # D10
+
+            setUserTicks(1000)
+            ei()                                # Enable all interrupt
+
+            var
+                ix:int16 = 0
+                prev:int32 = 0
+            while true:
+                if isTickTrigger():
+                    clearTickTrigger()
+                    disablePwmPeriodIntr()
+                    let pwmCounter = pwmIntrCounter # int32
+                    enablePwmPeriodIntr()
+                    xprintf("\n[%05d]",ix)
+                    xprintf("\n     %5ld Hz: PWM [44100 Hz] period interrupt freq.(Approximately)", pwmCounter - prev)
+                    prev = pwmCounter
+                    xprintf("\n    %9ld:     SPI [D11<-D12] error count in PWM period interrupt.",spi_err)
+                    inc(ix)
+        # Run main
+        main()
+        ```
+
+#### **sc\_card** folder
+* This program shows <span style="color: darkgreen; ">SD card</span> low-level initialize info and file list.
+    * Set baudrate 38400bps to your terminal program.
+        ```
+        $ cd example2/sd_card
+        $ make
+        ```
+    * Terminal output:
+        ```
+        [sd_card.nim] Start SD card init
+        --- Found: SDv2 !
+        --- --- ACMD41 OK
+        --- --- --- Found: SDSC None Block Mode : CMD58
+        [Finished!]: OK!  SD card init
+        [fat_lib.nim/FAT_init()] Start MBR/FAT read
+        MBR is:
+         0000:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0010:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0020:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0030:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0040:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0050:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0060:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0070:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0080:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0090:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         00A0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         00B0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         00C0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         00D0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         00E0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         00F0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0100:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0110:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0120:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0130:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0140:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0150:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0160:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0170:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0180:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         0190:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         01A0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         01B0:00 00 00 00 00 00 00 00 FD 3D DE 19 00 00 00 03
+         01C0:3F 00 06 17 D7 D7 FB 00 00 00 05 7F 3C 00 00 00
+         01D0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         01E0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+         01F0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 55 AA
+        BPB_Sector[0x01C6] = 0x00FB [th sector]
+        BPB_Info is:
+         EB 00 90 4D 53 57 49 4E 34 2E 31 00 02 40 01 00 02 00 02 00 00 F8 F2 00 3F 00 40 00 FB 00 00 00
+            dwBPB_SecPerFats32 = 242
+            bBPB_NumFATs       = 2
+            wBPB_RsvdSecCnt    = 1
+            dwBPB_HiddSec      = 251
+            lgdwRootdir_sector = 736
+            lgwSize_of_root    = 16384
+            lgwBPB_RootEntCnt  = 512
+            lgbBPB_SecPerClus  = 64
+            lgwBPB_BytesPerSec = 512
+        File entries(FENT) of 32byte are:
+        FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+        asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+        File entries(FENT) of 32byte are:
+        ....
+        ....
+        skip the rest
+        ```
+
+2019/01, 2021/10 by audin (http://mpu.seesa.net)
+
+
