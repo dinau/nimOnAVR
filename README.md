@@ -7,10 +7,10 @@
             - [**led** folder](#led-folder)
             - [**nimOnArduino** folder](#nimonarduino-folder)
             - [**uart** folder](#uart-folder)
-            - [**uartled** folder](#uartled-folder)
+            - [**uart_led** folder](#uart_led-folder)
         - [Example2](#example2)
-            - [**intrtest** folder](#intrtest-folder)
-            - [**sc\card** folder](#sc\card-folder)
+            - [**intr_test** folder](#intr_test-folder)
+            - [**sd\_card** folder](#sd_card-folder)
 
   
 
@@ -256,7 +256,7 @@
         main()
         ```
 
-#### **sc\_card** folder
+#### **sd\_card** folder
 * This program shows <span style="color: darkgreen; ">SD card</span> low-level initialize info and file list.
     * Set baudrate 38400bps to your terminal program.
         ```
