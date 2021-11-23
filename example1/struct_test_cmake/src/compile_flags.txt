@@ -1,0 +1,15 @@
+-Ilib/xprintf/xprintf_int
+
+-I../ATMega/src
+-Iinclude
+-Iportable/GCC/ATMega323
+
+-ID:/arduino-1.8.16/hardware/tools/avr/avr/include
+-ID:/arduino-1.8.16/hardware/tools/avr/avr/include/avr
+-ID:/arduino-1.8.16/hardware/tools/avr/avr/include/compat
+-ID:/arduino-1.8.16/hardware/tools/avr/avr/include/sys
+-ID:/arduino-1.8.16/hardware/tools/avr/avr/include/util
+
+
+-mmcu=atmega328p
+-DF_CPU=16000000UL

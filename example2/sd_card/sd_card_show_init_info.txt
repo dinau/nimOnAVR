@@ -1,0 +1,153 @@
+[sd_card.nim] Start SD card init
+--- Found: SDv2 !
+--- --- ACMD41 OK
+--- --- --- Found: SDSC None Block Mode : CMD58
+[Finished!]: OK!  SD card init
+[fat_lib.nim/FAT_init()] Start MBR/FAT read
+MBR is:
+ 0000:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0010:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0020:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0030:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0040:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0050:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0060:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0070:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0080:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0090:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00A0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00B0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00C0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00D0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00E0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 00F0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0100:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0110:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0120:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0130:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0140:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0150:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0160:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0170:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0180:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 0190:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 01A0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 01B0:00 00 00 00 00 00 00 00 FD 3D DE 19 00 00 00 03
+ 01C0:3F 00 06 17 D7 D7 FB 00 00 00 05 7F 3C 00 00 00
+ 01D0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 01E0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ 01F0:00 00 00 00 00 00 00 00 00 00 00 00 00 00 55 AA
+BPB_Sector[0x01C6] = 0x00FB [th sector]
+BPB_Info is:
+ EB 00 90 4D 53 57 49 4E 34 2E 31 00 02 40 01 00 02 00 02 00 00 F8 F2 00 3F 00 40 00 FB 00 00 00
+    dwBPB_SecPerFats32 = 242
+    bBPB_NumFATs       = 2
+    wBPB_RsvdSecCnt    = 1
+    dwBPB_HiddSec      = 251
+    lgdwRootdir_sector = 736
+    lgwSize_of_root    = 16384
+    lgwBPB_RootEntCnt  = 512
+    lgbBPB_SecPerClus  = 64
+    lgwBPB_BytesPerSec = 512
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+FENT: 41 4F 00 75 00 72 00 50 00 6C 00 0F 00 05 61 00 63 00 65 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  O     u     r     P     l              a     c     e     .     w     a           v
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+FENT: 41 4F 00 75 00 72 00 50 00 6C 00 0F 00 05 61 00 63 00 65 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  O     u     r     P     l              a     c     e     .     w     a           v
+FENT: 4F 55 52 50 4C 41 43 45 57 41 56 20 00 A5 71 20 5B 53 5B 53 00 00 7C 9E 9A 48 04 00 7E B9 BB 01
+asci:  O  U  R  P  L  A  C  E  W  A  V           q     [  S  [  S        |        H        ~
+OURPLACE.WAV
+lgdwBPB_FileSize(Filesize) = 29079934
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+FENT: 41 4F 00 75 00 72 00 50 00 6C 00 0F 00 05 61 00 63 00 65 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  O     u     r     P     l              a     c     e     .     w     a           v
+FENT: 4F 55 52 50 4C 41 43 45 57 41 56 20 00 A5 71 20 5B 53 5B 53 00 00 7C 9E 9A 48 04 00 7E B9 BB 01
+asci:  O  U  R  P  L  A  C  E  W  A  V           q     [  S  [  S        |        H        ~
+FENT: 41 52 00 61 00 69 00 6E 00 62 00 0F 00 F6 6F 00 77 00 73 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  R     a     i     n     b              o     w     s     .     w     a           v
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+FENT: 41 4F 00 75 00 72 00 50 00 6C 00 0F 00 05 61 00 63 00 65 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  O     u     r     P     l              a     c     e     .     w     a           v
+FENT: 4F 55 52 50 4C 41 43 45 57 41 56 20 00 A5 71 20 5B 53 5B 53 00 00 7C 9E 9A 48 04 00 7E B9 BB 01
+asci:  O  U  R  P  L  A  C  E  W  A  V           q     [  S  [  S        |        H        ~
+FENT: 41 52 00 61 00 69 00 6E 00 62 00 0F 00 F6 6F 00 77 00 73 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  R     a     i     n     b              o     w     s     .     w     a           v
+FENT: 52 41 49 4E 42 4F 57 53 57 41 56 20 00 49 74 20 5B 53 5B 53 00 00 92 5D CD 48 7C 03 58 70 E0 01
+asci:  R  A  I  N  B  O  W  S  W  A  V        I  t     [  S  [  S           ]     H  |     X  p
+RAINBOWS.WAV
+lgdwBPB_FileSize(Filesize) = 31486040
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+FENT: 41 4F 00 75 00 72 00 50 00 6C 00 0F 00 05 61 00 63 00 65 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  O     u     r     P     l              a     c     e     .     w     a           v
+FENT: 4F 55 52 50 4C 41 43 45 57 41 56 20 00 A5 71 20 5B 53 5B 53 00 00 7C 9E 9A 48 04 00 7E B9 BB 01
+asci:  O  U  R  P  L  A  C  E  W  A  V           q     [  S  [  S        |        H        ~
+FENT: 41 52 00 61 00 69 00 6E 00 62 00 0F 00 F6 6F 00 77 00 73 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  R     a     i     n     b              o     w     s     .     w     a           v
+FENT: 52 41 49 4E 42 4F 57 53 57 41 56 20 00 49 74 20 5B 53 5B 53 00 00 92 5D CD 48 7C 03 58 70 E0 01
+asci:  R  A  I  N  B  O  W  S  W  A  V        I  t     [  S  [  S           ]     H  |     X  p
+FENT: 42 6C 00 65 00 2E 00 77 00 61 00 0F 00 91 76 00 00 00 FF FF FF FF FF FF FF FF 00 00 FF FF FF FF
+asci:  B  l     e     .     w     a              v
+File entries(FENT) of 32byte are:
+FENT: 42 20 00 49 00 6E 00 66 00 6F 00 0F 00 72 72 00 6D 00 61 00 74 00 69 00 6F 00 00 00 6E 00 00 00
+asci:  B        I     n     f     o           r  r     m     a     t     i     o           n
+FENT: 01 53 00 79 00 73 00 74 00 65 00 0F 00 72 6D 00 20 00 56 00 6F 00 6C 00 75 00 00 00 6D 00 65 00
+asci:     S     y     s     t     e           r  m           V     o     l     u           m     e
+FENT: 53 59 53 54 45 4D 7E 31 20 20 20 16 00 9F 54 20 5B 53 5B 53 00 00 55 20 5B 53 02 00 00 00 00 00
+asci:  S  Y  S  T  E  M  ~  1                    T     [  S  [  S        U     [  S
+FENT: 41 4F 00 75 00 72 00 50 00 6C 00 0F 00 05 61 00 63 00 65 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  O     u     r     P     l              a     c     e     .     w     a           v
+FENT: 4F 55 52 50 4C 41 43 45 57 41 56 20 00 A5 71 20 5B 53 5B 53 00 00 7C 9E 9A 48 04 00 7E B9 BB 01
+asci:  O  U  R  P  L  A  C  E  W  A  V           q     [  S  [  S        |        H        ~
+FENT: 41 52 00 61 00 69 00 6E 00 62 00 0F 00 F6 6F 00 77 00 73 00 2E 00 77 00 61 00 00 00 76 00 00 00
+asci:  A  R     a     i     n     b              o     w     s     .     w     a           v
+FENT: 52 41 49 4E 42 4F 57 53 57 41 56 20 00 49 74 20 5B 53 5B 53 00 00 92 5D CD 48 7C 03 58 70 E0 01
+asci:  R  A  I  N  B  O  W  S  W  A  V        I  t     [  S  [  S           ]     H  |     X  p
+FENT: 42 6C 00 65 00 2E 00 77 00 61 00 0F 00 91 76 00 00 00 FF FF FF FF FF FF FF FF 00 00 FF FF FF FF
+asci:  B  l     e     .     w     a              v
+FENT: 01 41 00 63 00 6F 00 75 00 73 00 0F 00 91 74 00 69 00 63 00 53 00 68 00 75 00 00 00 66 00 66 00
+asci:     A     c     o     u     s              t     i     c     S     h     u           f     f
+FENT: 41 43 4F 55 53 54 7E 31 57 41 56 20 00 03 77 20 5B 53 5B 53 00 00 D7 5D 65 4E 3D 07 E8 93 B6 01
+asci:  A  C  O  U  S  T  ~  1  W  A  V           w     [  S  [  S           ]  e  N  =
+ACOUST~1.WAV
+lgdwBPB_FileSize(Filesize) = 28742632

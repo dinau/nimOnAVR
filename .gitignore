@@ -12,3 +12,4 @@ GTAGS
 .BUILD/
 .nimcache/
 .build*
+save/
