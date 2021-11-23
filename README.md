@@ -20,10 +20,10 @@
 ##    Nim language test program for Arduino UNO/Nano or its compatibles.
 
 ### Prerequisite
-* nim-1.6.0 or nim-1.4.8 (https://nim-lang.org/install.html)  
+* [nim-1.6.0 or nim-1.4.8](https://nim-lang.org/install.html)  
     * **Important**:  
         * It must be used above nim version otherwise it won't work well.
-* avr-gcc v7.3.0 (inclued in arduino-1.8.16 IDE)  
+* avr-gcc v7.3.0 (inclued in [arduino-1.8.16 IDE](https://www.arduino.cc/en/software))  
     * For example, if on windows set executable path to  
          **d:\arduino-1.8.16\hardware\tools\avr\bin**  
 * make,rm and etc Linux tool commands
@@ -36,6 +36,8 @@
     ```
     $ cd example1/led  
     $ make  
+    ```
+    ```
     nim c --passL:"-Wl,-Map=.BUILD/main.map,--cref" src/main
     Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
     Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
@@ -128,12 +130,15 @@
 
         avrdude.exe done.  Thank you.
     ``` 
+
 #### **nimOnArduino** folder 
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
     * [Referred from 'Nim on Arduino'](https://disconnected.systems/blog/nim-on-adruino/)
         ```
         $ cd example1/nimOnArduino  
         $ make
+        ```
+        ```
         nim c --passL:"-Wl,-Map=.BUILD/blink.map,--cref" blink
         Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
         Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
@@ -234,8 +239,9 @@
         ```
         * This project is using [**cmake**](https://cmake.org/) to resolve dependency for C language files.
             * It's needed to use cmake v3.13 or later. 
+        * Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.build_cmake</span> folder.
 
-    * Nim
+    * Type of struct definition on Nim
         ```Nim
         type
             Student* {.byref.} = object
@@ -253,7 +259,7 @@
         ```Nim
         proc show_and_modify_by_c_lang(std:var Student){.importc,cdecl.}
         ```
-    * C language
+    * Type of struct definition on C language
         ```C
         typedef struct Student {
             uint16_t age;
@@ -266,6 +272,54 @@
             ...
         }
         ```
+    * Terminal output:
+        ```
+         === Showing std object in Nim ===
+         Age         = 20
+         cstringName = my_name_cstring
+         arrayName   = ['A', 'B', '\x00', '\x00', '\x00', '\x00', '\x00']
+
+         &std.age            = 0x000008d9
+         &std.cstringName    = 0x000008db
+         &std.arrayName      = 0x000008dd
+         &std.cstringName[0] = 0x00000636
+         &std.arrayName[0]   = 0x000008dd
+
+        Calling C function: show_and_modify_by_c_lang(std)
+
+         ======= Received the object pointer of std from Nim at C language function =======
+            std.Age = 20
+            std.cstrinName  = my_name_cstring
+            std.arrayName   = AB
+
+            &std.Age            = 0x000008d9
+            &std.cstringNname   = 0x000008db
+            &std.arrayName      = 0x000008dd
+            &std.ctringNname[0] = 0x00000636
+            &std.arrayName[0]   = 0x000008dd
+
+            Now changing the object data as follows,
+              std->age += 50;
+              std->cstringName[0]='0';
+              std->cstringName[1]='1';
+              std->cstringName[2]='\0';
+
+              std->arrayName[0]  ='1';
+              std->arrayName[1]  ='2';
+              std->arrayName[2]  ='3';
+              std->arrayName[3]  ='4';
+              std->arrayName[4]  ='5';
+              std->arrayName[5]  ='\0';
+
+         ============ in C language function end =======
+
+        === Showing std object modified by C function ===
+        Age         = 70
+        cstringName = 01
+        arrayName   = ['1', '2', '3', '4', '5', '\x00', '\x00']
+        --- [ xprintf test ! ] ---
+        ```
+
 ### Example2
 ####  **intr_test** folder
 * Simple <span style="color: darkgreen; ">Interrupt/SPI/PWM/UART</span> test program with ChaN's xprintf() functions.
@@ -397,6 +451,9 @@
         skip the rest
         ```
 
-2019/01, 2021/10 by audin (http://mpu.seesa.net)
+
+
+2019/01, 2021/11 by audin
+
 
 
