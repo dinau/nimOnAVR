@@ -33,8 +33,23 @@
 #### **led** folder
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
 
-        $ cd example1/led  
-        $ make
+    ```
+    $ cd example1/led  
+    $ make  
+    nim c --passL:"-Wl,-Map=.BUILD/main.map,--cref" src/main
+    Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
+    Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
+    Hint: used config file 'D:\nim-data\avr\nimOnAVR\example1\led\nim.cfg' [Conf]
+    ........................................................
+    CC: stdlib_system.nim
+    CC: delay.nim
+    CC: main.nim
+    Hint:  [Link]
+    Hint: gc: arc; opt: speed; options: -d:danger
+    24649 lines; 3.141s; 20.727MiB peakmem; proj: src\main; out: D:\nim-data\avr\nimOnAVR\example1\led\.BUILD\main.elf [SuccessX]
+       text    data     bss     dec     hex filename
+        234       0       0     234      ea .BUILD/main.elf
+    ```
 
 * Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.BUILD</span> folder.
 * Code: src/main.nim
@@ -116,9 +131,23 @@
 #### **nimOnArduino** folder 
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
     * [Referred from 'Nim on Arduino'](https://disconnected.systems/blog/nim-on-adruino/)
-
-            $ cd example1/nimOnArduino  
-            $ make
+        ```
+        $ cd example1/nimOnArduino  
+        $ make
+        nim c --passL:"-Wl,-Map=.BUILD/blink.map,--cref" blink
+        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
+        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
+        Hint: used config file 'D:\nim-data\avr\nimOnAVR\example1\nimOnArduino\nim.cfg' [Conf]
+        ...................................................
+        CC: led
+        CC: stdlib_system.nim
+        CC: blink.nim
+        Hint:  [Link]
+        Hint: gc: arc; opt: speed; options: -d:danger
+        23380 lines; 2.439s; 16.695MiB peakmem; proj: blink; out: D:\nim-data\avr\nimOnAVR\example1\nimOnArduino\.BUILD\blink.elf [SuccessX]
+           text    data     bss     dec     hex filename
+            234       0       0     234      ea .BUILD/blink.elf
+        ```
 
     * Code: ./blink.nim
 
@@ -141,10 +170,10 @@
 #### **uart** folder
 * Simple <span style="color: darkgreen; ">UART</span> test program with ChaN's xprintf() functions.
     * Set baudrate 38400bps to your terminal program.
-
-            $ cd example1/uart  
-            $ make
-
+        ```
+        $ cd example1/uart  
+        $ make
+        ```
     * Code: src/main.nim
 
         ```Nim
@@ -166,10 +195,10 @@
 #### **uart_led** folder
 * Just mixed <span style="color: darkgreen; ">UART</span> and <span style="color: darkgreen; ">LED</span> blinker test program.
     * Set baudrate 38400bps to your terminal program.
-
-            $ cd example1/uart_led  
-            $ make
-
+        ```
+        $ cd example1/uart_led  
+        $ make
+        ```
     * Code: src/main.nim
         ```Nim
         ...
@@ -199,9 +228,10 @@
 #### **struct_test_cmake** folder
 * Simple test, object(struct) data interchanging between Nim and C language. 
     * Set baudrate 38400bps to your terminal program.
-
-            $ cd example1/struct_test_cmake  
-            $ make
+        ```
+        $ cd example1/struct_test_cmake  
+        $ make
+        ```
         * This project is using [**cmake**](https://cmake.org/) to resolve dependency for C language files.
             * It's needed to use cmake v3.13 or later. 
 
@@ -245,7 +275,7 @@
         $ make
         ```
         * Terminal output:
-            * If you wires D11(MOSI) with D12(MISO), SPI error will be gone away (=>0) because of loopback connection.
+            * If you wires D11(MOSI) with D12(MISO), SPI error will be gone away (=>0) because of loopback connection established.
                 ```
                 ...
                 [00181]
