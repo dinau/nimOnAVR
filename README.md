@@ -64,6 +64,10 @@
         ```
     * See also [reg_utils.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/common/lib/reg_utils.nim)
 
+    * Peripheral register definition file
+        * [iom328p.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/common/avr/iom328p.nim) converted from [iom328.h](https://github.com/vancegroup-mirrors/avr-libc/blob/master/avr-libc/include/avr/iom328p.h) by c2nim and by hand (-:
+        * [str_defs.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/common/avr/sfr_defs.nim) converted from [str_defs.h](https://github.com/vancegroup-mirrors/avr-libc/blob/master/avr-libc/include/avr/sfr_defs.h) 
+        
 ### Example1
 #### **led** folder
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
