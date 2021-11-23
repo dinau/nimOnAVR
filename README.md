@@ -3,6 +3,7 @@
 - [Nim On AVR](#nim-on-avr)
     - [Nim language test program for Arduino UNO/Nano or its compatibles.](#nim-language-test-program-for-arduino-unonano-or-its-compatibles)
         - [Prerequisite](#prerequisite)
+        - [AVR Peripheral register access](#avr-peripheral-register-access)
         - [Example1](#example1)
             - [**led** folder](#led-folder)
             - [**nimOnArduino** folder](#nimonarduino-folder)
@@ -24,10 +25,10 @@
     * **Important**:  
         * It must be used above nim version otherwise it won't work well.
 * avr-gcc v7.3.0 (inclued in [arduino-1.8.16 IDE](https://www.arduino.cc/en/software))  
-    * For example, if on windows set executable path to  
+    * For example, if on Windows10 set executable path to  
          **d:\arduino-1.8.16\hardware\tools\avr\bin**  
 * make,rm and etc Linux tool commands
-* cmake version 3.13 or later  
+* [CMake](https://cmake.org/download/) version 3.13 or later  
 
 ### AVR Peripheral register access
 * Load / Store operation
@@ -76,7 +77,8 @@
     $ cd example1/led  
     $ make  
     ```
-    ```
+    ```sh
+    $ make 
     nim c --passL:"-Wl,-Map=.BUILD/main.map,--cref" src/main
     Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
     Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
@@ -92,7 +94,7 @@
         234       0       0     234      ea .BUILD/main.elf
     ```
 
-* Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.BUILD</span> folder.
+* Artifacts (`*`.hex,`*`.lst files etc) would be generate to **.BUILD** folder.
 * Code: src/main.nim
 
     ```Nim
@@ -177,7 +179,8 @@
         $ cd example1/nimOnArduino  
         $ make
         ```
-        ```
+        ```sh
+        $ make
         nim c --passL:"-Wl,-Map=.BUILD/blink.map,--cref" blink
         Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
         Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
@@ -209,7 +212,7 @@
                 delay(1000)
                 led_off()
                 delay(1000)
-            ```
+        ```
 
 #### **uart** folder
 * Simple <span style="color: darkgreen; ">UART</span> test program with ChaN's xprintf() functions.
@@ -276,10 +279,9 @@
         $ cd example1/struct_test_cmake  
         $ make
         ```
-        * This project is using [**cmake**](https://cmake.org/) to resolve dependency for C language files.
-            * It's needed to install cmake v3.13 or later. 
-        * Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.build_cmake</span> folder.
-
+        * This project is using [**CMake**](https://cmake.org/) to resolve dependency for C language files.
+            * It's needed to install CMake v3.13 or later. 
+        * Artifacts (`*`.hex,`*`.lst files etc) would be generate to **.build_cmake** folder.
     * Type definition on Nim
         * Code [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example1/struct_test_cmake/src/main.nim)
             ```Nim
@@ -372,7 +374,7 @@
         ```
         * Terminal output:
             * If you wires D11(MOSI) with D12(MISO), SPI error will be gone away (=>0) because of loopback connection established.
-                ```
+                ```sh
                 ...
                 [00181]
                      45504 Hz: PWM [44100 Hz] period interrupt freq.(Approximately)
@@ -383,8 +385,7 @@
             * Chip select: D8(PB0) and D4(PD4)
             * MISO: D12(PB4), MOSI: D11(PB3)
             * SCK: D13(PB5)
-
-        * If you have oscilloscope, it can be observe PWM signal(period=44.1kHz) at D9,D10 pin.
+        * If you have oscilloscope, it could be observe PWM signal(period=44.1kHz) at D9,D10 pin.
     * Code: [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/intr_test/src/main.nim)
         ```Nim
         # main program
@@ -464,7 +465,7 @@
         ```
 
     * Terminal output: [(Full output)](https://github.com/dinau/nimOnAVR/blob/main/example2/sd_card/sd_card_show_init_info.txt)
-        ```
+        ```sh
         [sd_card.nim] Start SD card init
         --- Found: SDv2 !
         --- --- ACMD41 OK
