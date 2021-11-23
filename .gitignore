@@ -1,0 +1,14 @@
+.hgignore
+.hgtags
+GPATH
+GRTAGS
+GTAGS
+*.cfg-ok
+*.rej
+*.os-any
+*.os-standalone
+
+.hg/
+.BUILD/
+.nimcache/
+.build*
