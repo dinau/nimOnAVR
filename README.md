@@ -29,6 +29,41 @@
 * make,rm and etc Linux tool commands
 * cmake version 3.13 or later  
 
+### AVR Peripheral register access
+* Load / Store operation
+    * Load from Peripheral register
+        ```Nim
+         var 
+            inData1 = PORTB.v
+            inData2 = PORTB.ld  # same as above
+         ```
+    * Store to Peripheral register 
+        ```Nim
+         PORTA.v = 123  
+         PORTA.st 123   # same as above
+         PORTA.st(123)  # same as above
+         ```
+* Bit operation
+    * 1 bit
+        ```Nim
+        PORTB.b3 = 1             # bit set
+        PORTB.b7 = 0             # bit clear 
+        # Note: (bx: x = 0..7 )
+        var 
+            bitdata = PORTA.b2   # bit read
+        ```
+    * Multi bits
+        ```Nim
+            # Set / clear multi bits at a time specifiying bit name.
+            PORTC.bset [PORTC0,PORTC1,PORTC6,PORTC7]  
+            SPCR.bclr [SPR0,SPR1] 
+        ```
+    * BV() function
+        ```Nim
+        SPCR.v = BV(SPE) + BV(MSTR)
+        ```
+    * See also [reg_utils.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/common/lib/reg_utils.nim)
+
 ### Example1
 #### **led** folder
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
