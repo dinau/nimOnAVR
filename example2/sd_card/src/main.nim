@@ -7,7 +7,7 @@
   UART baudrate 38400 bps
 ]#
 
-import conf_sys,pwm,systick,spi,uart
+import conf_sys,systick,spi,uart
 import sd_card,fat_lib
 #[ /* SD card pin
  Pin side
@@ -57,9 +57,6 @@ proc main() =
     when UART_INFO:
         initUart(mBRate(UART_BAUDRATE)) # 38400bps
     initSpi()                       # SCK=8MHz
-    initPwm()                       # PWM setting
-    enablePwmPeriodIntr()           # enable PWM period interrupt
-
     ei()                            # enable all interrupt
 
     while not sd_init():            # SDSC,SDHC initialize

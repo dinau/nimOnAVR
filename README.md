@@ -39,9 +39,9 @@
          ```
     * Store to Peripheral register 
         ```Nim
-         PORTA.v = 123  
-         PORTA.st 123   # same as above
-         PORTA.st(123)  # same as above
+         PORTD.v = 123  
+         PORTD.st 123   # same as above
+         PORTD.st(123)  # same as above
          ```
 * Bit operation
     * 1 bit
@@ -50,7 +50,7 @@
         PORTB.b7 = 0             # bit clear 
         # Note: (bx: x = 0..7 )
         var 
-            bitdata = PORTA.b2   # bit read
+            bitdata = PORTD.b2   # bit read
         ```
     * Multi bits
         ```Nim
@@ -214,7 +214,7 @@
         $ cd example1/uart  
         $ make
         ```
-    * Code: src/main.nim
+    * Code: [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example1/uart/src/main.nim)
 
         ```Nim
         ...
@@ -239,7 +239,7 @@
         $ cd example1/uart_led  
         $ make
         ```
-    * Code: src/main.nim
+    * Code: [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example1/uart_led/src/main.nim)
         ```Nim
         ...
         # UART setting
@@ -273,40 +273,43 @@
         $ make
         ```
         * This project is using [**cmake**](https://cmake.org/) to resolve dependency for C language files.
-            * It's needed to use cmake v3.13 or later. 
+            * It's needed to install cmake v3.13 or later. 
         * Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.build_cmake</span> folder.
 
-    * Type of struct definition on Nim
-        ```Nim
-        type
-            Student* {.byref.} = object
-                age*:uint16
-                cstringName*:cstring
-                arrayName*: array[7,char]
-        ...
-        var
-            std:Student
-        ...
-        show_and_modify_by_c_lang(std)
-        ...
-
-        ```
-        ```Nim
-        proc show_and_modify_by_c_lang(std:var Student){.importc,cdecl.}
-        ```
-    * Type of struct definition on C language
-        ```C
-        typedef struct Student {
-            uint16_t age;
-            char *cstringName;
-            char arrayName[7];
-        } Student;
-        ```
-        ```C
-        void show_and_modify_by_c_lang(Student *std){
+    * Type definition on Nim
+        * Code [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example1/struct_test_cmake/src/main.nim)
+            ```Nim
+            type
+                Student* {.byref.} = object
+                    age*:uint16
+                    cstringName*:cstring
+                    arrayName*: array[7,char]
             ...
-        }
-        ```
+            var
+                std:Student
+            ...
+            show_and_modify_by_c_lang(std)
+            ...
+
+            ```
+            ```Nim
+            proc show_and_modify_by_c_lang(std:var Student){.importc,cdecl.}
+            ```
+    * Type definition on C language
+        * Code [src/student.h](https://github.com/dinau/nimOnAVR/blob/main/example1/struct_test_cmake/src/student.h)
+            ```C
+            typedef struct Student {
+                uint16_t age;
+                char *cstringName;
+                char arrayName[7];
+            } Student;
+            ```
+        * Code [src/student.c](https://github.com/dinau/nimOnAVR/blob/main/example1/struct_test_cmake/src/student.c)
+            ```C
+            void show_and_modify_by_c_lang(Student *std){
+                ...
+            }
+            ```
     * Terminal output:
         ```
          === Showing std object in Nim ===
@@ -378,7 +381,7 @@
             * SCK: D13(PB5)
 
         * If you have oscilloscope, it can be observe PWM signal(period=44.1kHz) at D9,D10 pin.
-    * Code: src/main.nim
+    * Code: [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/intr_test/src/main.nim)
         ```Nim
         # main program
         proc main() =
@@ -424,7 +427,39 @@
         $ cd example2/sd_card
         $ make
         ```
-    * Terminal output:
+    * Code [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/sd_card/src/main.nim)
+        ```Nim
+        when UART_INFO:
+            {.compile:"xprintf.c".}
+
+        template initPort*() =
+        # set pull up to i/o port.
+            PORTB.v = 0xFF
+            PORTC.v = 0xFF
+            PORTD.v = 0xFF
+            DDRB.v =  0xEF # all output except PB4
+            DDRD.v =  0xFF # all output port
+
+        # main program
+        proc main() =
+            initPort()
+            initSystick()
+            when UART_INFO:
+                initUart(mBRate(UART_BAUDRATE)) # 38400bps
+            initSpi()                       # SCK=8MHz
+            ei()                            # enable all interrupt
+
+            while not sd_init():            # SDSC,SDHC initialize
+                wait_ms(1500)
+            FAT_init()                      # Accept FAT16 and FAT32
+            for _ in 1..3:                  # Show the information of first 3 file
+                searchNextFile()
+
+        # Run main
+        main()
+        ```
+
+    * Terminal output: [(Full output)](https://github.com/dinau/nimOnAVR/blob/main/example2/sd_card/sd_card_show_init_info.txt)
         ```
         [sd_card.nim] Start SD card init
         --- Found: SDv2 !
