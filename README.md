@@ -8,9 +8,10 @@
             - [**nimOnArduino** folder](#nimonarduino-folder)
             - [**uart** folder](#uart-folder)
             - [**uart_led** folder](#uart_led-folder)
+            - [**struct_test_cmake** folder](#struct_test_cmake-folder)
         - [Example2](#example2)
             - [**intr_test** folder](#intr_test-folder)
-            - [**sd\_card** folder](#sd_card-folder)
+            - [**sd_card** folder](#sd_card-folder)
 
 <!-- /TOC -->
   
@@ -38,7 +39,7 @@
 * Artifacts (`*`.hex,`*`.lst files etc) would be generate to <span style="color: darkgreen; ">.BUILD</span> folder.
 * Code: src/main.nim
 
-    ```nim
+    ```Nim
     import iom328p,delay
 
     # LED setting
@@ -121,7 +122,7 @@
 
     * Code: ./blink.nim
 
-        ```nim
+        ```Nim
         {.compile: "led.c".}
         proc led_setup():   void {.importc.}
         proc led_on():      void {.importc.}
@@ -146,7 +147,7 @@
 
     * Code: src/main.nim
 
-        ```nim
+        ```Nim
         ...
         # UART setting
         ...
@@ -170,7 +171,7 @@
             $ make
 
     * Code: src/main.nim
-        ```nim
+        ```Nim
         ...
         # UART setting
         ...
@@ -195,6 +196,46 @@
                 num += 1
         main()
         ``` 
+#### **struct_test_cmake** folder
+* Simple test, object(struct) data interchanging between Nim and C language. 
+    * Set baudrate 38400bps to your terminal program.
+
+            $ cd example1/struct_test_cmake  
+            $ make
+        * This project is using [**cmake**](https://cmake.org/) to resolve dependency for C language files.
+            * It's needed to use cmake v3.13 or later. 
+
+    * Nim
+        ```Nim
+        type
+            Student* {.byref.} = object
+                age*:uint16
+                cstringName*:cstring
+                arrayName*: array[7,char]
+        ...
+        var
+            std:Student
+        ...
+        show_and_modify_by_c_lang(std)
+        ...
+
+        ```
+        ```Nim
+        proc show_and_modify_by_c_lang(std:var Student){.importc,cdecl.}
+        ```
+    * C language
+        ```C
+        typedef struct Student {
+            uint16_t age;
+            char *cstringName;
+            char arrayName[7];
+        } Student;
+        ```
+        ```C
+        void show_and_modify_by_c_lang(Student *std){
+            ...
+        }
+        ```
 ### Example2
 ####  **intr_test** folder
 * Simple <span style="color: darkgreen; ">Interrupt/SPI/PWM/UART</span> test program with ChaN's xprintf() functions.
@@ -219,7 +260,7 @@
 
         * If you have oscilloscope, it can be observe PWM signal(period=44.1kHz) at D9,D10 pin.
     * Code: src/main.nim
-        ```nim
+        ```Nim
         # main program
         proc main() =
             initPort()
