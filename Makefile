@@ -15,7 +15,7 @@ all: clean
 
 clean:
 	$(foreach exdir,$(SAMPLE_DIRS), $(call def_clean,$(exdir) ))
-	@$(MAKE) -C $(EX1)/struct_test_cmake cleanall
+	@$(MAKE) -C $(EX1)/struct_test_cmake clean
 
 # definition loop funciton
 define def_make

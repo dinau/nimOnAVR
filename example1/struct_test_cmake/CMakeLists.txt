@@ -15,7 +15,8 @@ project(struct_test VERSION 1.0 LANGUAGES C)
 
 # プロジェクト名は 長いのでselfに変更
 # Just changes to more short name.
-set(self ${CMAKE_PROJECT_NAME})
+#set(self ${CMAKE_PROJECT_NAME})
+set(self main)
 
 # binutils用
 # For binutils.
@@ -32,6 +33,7 @@ target_link_options(${self}
     PRIVATE
          ${cflags}
         -Wl,-Map=${exe_abs_name}_${DEVICE}.map,--cref
+        -Wl,-o,${exe_abs_name}.elf
     )
 
 # (4) インクルードディレクトリ指定
@@ -58,12 +60,12 @@ target_sources(${self}
 # Execute after build command.
 add_custom_command(TARGET ${self}
     POST_BUILD
-        COMMAND ${OBJSIZE} "${exe_abs_name}" # サイズ表示
+        COMMAND ${OBJSIZE} "${exe_abs_name}.elf" # サイズ表示
         #COMMAND "${exe_abs_name}"         # EXEファイルを実行する
         # アセンブラリストを出す
-        COMMAND ${OBJDUMP} -hSC "${exe_abs_name}" > "${exe_abs_name}_${DEVICE}.lst"
+        COMMAND ${OBJDUMP} -hSC "${exe_abs_name}.elf" > "${exe_abs_name}_${DEVICE}.lst"
         # HEXファイルを出す
-        COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom "${exe_abs_name}" "${exe_abs_name}_${DEVICE}.hex"
-        COMMAND ${CMAKE_OBJCOPY} -j .eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings -O  ihex "${exe_abs_name}"  "${exe_abs_name}_${DEVICE}.eep"
+        COMMAND ${CMAKE_OBJCOPY} -O ihex -R .eeprom "${exe_abs_name}.elf" "${exe_abs_name}_${DEVICE}.hex"
+        COMMAND ${CMAKE_OBJCOPY} -j .eeprom --set-section-flags=.eeprom="alloc,load" --change-section-lma .eeprom=0 --no-change-warnings -O  ihex "${exe_abs_name}.elf"  "${exe_abs_name}_${DEVICE}.eep"
     )
 

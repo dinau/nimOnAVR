@@ -1,6 +1,14 @@
-TARGET = main
+.PHONY: clean w t
 
-COM_PORT = COM5
-AVRDUDE_BAUDRATE = 57600
-include ../common/common.mk
+all:
+	@nim make
 
+w:
+	@nim w
+
+clean:
+	@nim clean
+
+# for test
+t:
+	@nim t
