@@ -1,24 +1,25 @@
 <!-- TOC -->
 
 - [Nim On AVR](#nim-on-avr)
-    - [Nim language test program for Arduino UNO/Nano or its compatibles.](#nim-language-test-program-for-arduino-unonano-or-its-compatibles)
+    - [Nim language test program for Arduino UNO/Nano](#nim-language-test-program-for-arduino-unonano)
         - [Prerequisite](#prerequisite)
         - [AVR Peripheral register access](#avr-peripheral-register-access)
         - [Example1](#example1)
-            - [**led** folder](#led-folder)
-            - [**nimOnArduino** folder](#nimonarduino-folder)
-            - [**uart** folder](#uart-folder)
-            - [**uart_led** folder](#uart_led-folder)
-            - [**struct_test_cmake** folder](#struct_test_cmake-folder)
+            - [**LED blink** ](#led-blink)
+            - [**nimOnArduino** ](#nimonarduino)
+            - [**UART** ](#uart)
+            - [**UART_LED** ](#uart_led)
+            - [**Struct_Test_CMake** ](#struct_test_cmake)
         - [Example2](#example2)
-            - [**intr_test** folder](#intr_test-folder)
-            - [**sd_card** folder](#sd_card-folder)
+            - [**Intr_Test** ](#intr_test)
+            - [**SD_Card** ](#sd_card)
+        - [Other link](#other-link)
 
 <!-- /TOC -->
   
 
 #                            Nim On AVR
-##    Nim language test program for Arduino UNO/Nano or its compatibles.
+##    Nim language test program for Arduino UNO/Nano
 
 ### Prerequisite
 * [nim-1.6.0 or nim-1.4.8](https://nim-lang.org/install.html)  
@@ -70,7 +71,7 @@
         * [str_defs.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/common/avr/sfr_defs.nim) converted from [str_defs.h](https://github.com/vancegroup-mirrors/avr-libc/blob/master/avr-libc/include/avr/sfr_defs.h) 
         
 ### Example1
-#### **led** folder
+#### **LED blink** 
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
 
     ```
@@ -79,21 +80,28 @@
     ```
     ```sh
     $ make 
-    nim c --passL:"-Wl,-Map=.BUILD/main.map,--cref" src/main
-    Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
-    Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
-    Hint: used config file 'D:\nim-data\avr\nimOnAVR\example1\led\nim.cfg' [Conf]
     ........................................................
     CC: stdlib_system.nim
     CC: delay.nim
     CC: main.nim
     Hint:  [Link]
     Hint: gc: arc; opt: speed; options: -d:danger
-    24649 lines; 3.141s; 20.727MiB peakmem; proj: src\main; out: D:\nim-data\avr\nimOnAVR\example1\led\.BUILD\main.elf [SuccessX]
+    51065 lines; 2.461s; 49.953MiB peakmem; proj: src\main; out: D:\nim-data\avr\nimOnAVR\example1\led\.BUILD\main.elf [SuccessX]
        text    data     bss     dec     hex filename
-        234       0       0     234      ea .BUILD/main.elf
+        234       0       0     234      ea .BUILD\main.elf
     ```
-
+    You can use make command for build management as follows,
+    ```sh
+    $ make # build target
+    $ make clean # clean target
+    $ make w # upload to flash
+    ```
+    or,
+    ```sh
+    $ nim make # build target
+    $ nim clean # clean target
+    $ nim w # upload to flash
+    ```
 * Artifacts (`*`.hex,`*`.lst files etc) would be generate to **.BUILD** folder.
 * Code: src/main.nim
 
@@ -119,49 +127,43 @@
 * Upload(write to Flash) the generated file to Arduino board
     * For instance Arduino Uno,
         ```
-        $ make w ARDUINO_VER=1.8.16 COM_PORT=COM5 AVRDUDE_BAUDRATE=115200
+        $ make w 
         ```
-        * Variable **ARDUINO_VER, COM_PORT, AVRDUDE_BAUDRATE** must be properly set
+        * Variable **ARDUINO_VER, COM_PORT, AVRDUDE_BAUDRATE** in **config.nims** must be properly set
             accoding to your envionment.  
-            See also **led/Makefile**.
+            See ./[config.nims](https://github.com/dinau/nimOnAVR/blob/main/example1/led/config.nims)
             * cf.
                 ```
                   Arduino Uno:       AVRDUDE_BAUDRATE=115200
                   Arduino Nano:      AVRDUDE_BAUDRATE=115200 
                   Arduino Nano(old): AVRDUDE_BAUDRATE=57600 
                 ```
-        ```  
-        $ make w ARDUINO_VER=1.8.16 COM_PORT=COM5 AVRDUDE_BAUDRATE=57600
-        nim c --passL:"-Wl,-Map=.BUILD/main.map,--cref" src/main
-        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
-        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
-        Hint: used config file 'D:\nim-data\avr\nimOnAVR\example1\led\nim.cfg' [Conf]
+        ```sh  
+        $ make w
         ........................................................
         Hint:  [Link]
         Hint: gc: arc; opt: speed; options: -d:danger
-        24649 lines; 0.680s; 20.715MiB peakmem; proj: src\main; out: D:\nim-data\avr\nimOnAVR\example1\led\.BUILD\main.elf [SuccessX]
+        51065 lines; 3.046s; 49.906MiB peakmem; proj: src\main; out: nimOnAVR\example1\led\.BUILD\main.elf [SuccessX]
            text    data     bss     dec     hex filename
-            234       0       0     234      ea .BUILD/main.elf
-        D:/arduino-1.8.16/hardware/tools/avr/bin/avrdude.exe -c arduino -C "D:/arduino-1.8.16/hardware/tools/avr/etc/avrdude.conf" -P COM5 \
-                -p m328p -b 57600  -u -e -U flash:w:.BUILD/main.elf:a
+            234       0       0     234      ea .BUILD\main.elf
 
         avrdude.exe: AVR device initialized and ready to accept instructions
 
-        Reading | ################################################## | 100% 0.02s
+        Reading | ################################################## | 100% 0.01s
 
         avrdude.exe: Device signature = 0x1e950f (probably m328p)
         avrdude.exe: erasing chip
-        avrdude.exe: reading input file ".BUILD/main.elf"
-        avrdude.exe: input file .BUILD/main.elf auto detected as ELF
+        avrdude.exe: reading input file ".BUILD\main.elf"
+        avrdude.exe: input file .BUILD\main.elf auto detected as ELF
         avrdude.exe: writing flash (234 bytes):
 
-        Writing | ################################################## | 100% 0.08s
+        Writing | ################################################## | 100% 0.10s
 
         avrdude.exe: 234 bytes of flash written
-        avrdude.exe: verifying flash memory against .BUILD/main.elf:
-        avrdude.exe: load data flash data from input file .BUILD/main.elf:
-        avrdude.exe: input file .BUILD/main.elf auto detected as ELF
-        avrdude.exe: input file .BUILD/main.elf contains 234 bytes
+        avrdude.exe: verifying flash memory against .BUILD\main.elf:
+        avrdude.exe: load data flash data from input file .BUILD\main.elf:
+        avrdude.exe: input file .BUILD\main.elf auto detected as ELF
+        avrdude.exe: input file .BUILD\main.elf contains 234 bytes
         avrdude.exe: reading on-chip flash data:
 
         Reading | ################################################## | 100% 0.08s
@@ -170,9 +172,9 @@
         avrdude.exe: 234 bytes of flash verified
 
         avrdude.exe done.  Thank you.
-    ``` 
+        ``` 
 
-#### **nimOnArduino** folder 
+#### **nimOnArduino** 
 * Simple <span style="color: darkgreen; ">LED</span> blinker program.  
     * [Referred from 'Nim on Arduino'](https://disconnected.systems/blog/nim-on-adruino/)
         ```
@@ -181,22 +183,18 @@
         ```
         ```sh
         $ make
-        nim c --passL:"-Wl,-Map=.BUILD/blink.map,--cref" blink
-        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\nim.cfg' [Conf]
-        Hint: used config file 'C:\Users\foo\.choosenim\toolchains\nim-1.6.0\config\config.nims' [Conf]
-        Hint: used config file 'D:\nim-data\avr\nimOnAVR\example1\nimOnArduino\nim.cfg' [Conf]
         ...................................................
         CC: led
         CC: stdlib_system.nim
         CC: blink.nim
         Hint:  [Link]
         Hint: gc: arc; opt: speed; options: -d:danger
-        23380 lines; 2.439s; 16.695MiB peakmem; proj: blink; out: D:\nim-data\avr\nimOnAVR\example1\nimOnArduino\.BUILD\blink.elf [SuccessX]
+        49796 lines; 2.468s; 49.953MiB peakmem; proj: .\blink; out: nimOnAVR\example1\nimOnArduino\.BUILD\blink.elf [SuccessX]
            text    data     bss     dec     hex filename
-            234       0       0     234      ea .BUILD/blink.elf
-        ```
+            234       0       0     234      ea .BUILD\blink.elf
 
-    * Code: ./blink.nim
+        ```
+    * Code: ./blink.nim , [led.c](https://github.com/dinau/nimOnAVR/blob/main/example1/nimOnArduino/led.c)
 
         ```Nim
         {.compile: "led.c".}
@@ -214,7 +212,7 @@
                 delay(1000)
         ```
 
-#### **uart** folder
+#### **UART** 
 * Simple <span style="color: darkgreen; ">UART</span> test program with ChaN's xprintf() functions.
     * Set baudrate 38400bps to your terminal program.
         ```
@@ -239,7 +237,7 @@
         main()
         ```
 
-#### **uart_led** folder
+#### **UART_LED** 
 * Just mixed <span style="color: darkgreen; ">UART</span> and <span style="color: darkgreen; ">LED</span> blinker test program.
     * Set baudrate 38400bps to your terminal program.
         ```
@@ -272,7 +270,7 @@
                 num += 1
         main()
         ``` 
-#### **struct_test_cmake** folder
+#### **Struct_Test_CMake** 
 * Simple test, object(struct) data interchanging between Nim and C language. 
     * Set baudrate 38400bps to your terminal program.
         ```
@@ -365,7 +363,7 @@
         ```
 
 ### Example2
-####  **intr_test** folder
+####  **Intr_Test** 
 * Simple <span style="color: darkgreen; ">Interrupt/SPI/PWM/UART</span> test program with ChaN's xprintf() functions.
     * Set baudrate 38400bps to your terminal program.
         ```
@@ -385,7 +383,7 @@
             * Chip select: D8(PB0) and D4(PD4)
             * MISO: D12(PB4), MOSI: D11(PB3)
             * SCK: D13(PB5)
-        * If you have oscilloscope, it could be observe PWM signal(period=44.1kHz) at D9,D10 pin.
+        * If you have oscilloscope, it could be observed PWM signal(period=44.1kHz) at D9,D10 pin.
     * Code: [src/main.nim](https://github.com/dinau/nimOnAVR/blob/main/example2/intr_test/src/main.nim)
         ```Nim
         # main program
@@ -425,8 +423,8 @@
         main()
         ```
 
-#### **sd\_card** folder
-* This program shows <span style="color: darkgreen; ">SD card</span> low-level initialize info and file list.
+#### **SD\_Card** 
+* This program shows <span style="color: darkgreen; ">SD card</span> low-level initialize info and file list in root folder.
     * Set baudrate 38400bps to your terminal program.
         ```
         $ cd example2/sd_card
@@ -457,7 +455,7 @@
             while not sd_init():            # SDSC,SDHC initialize
                 wait_ms(1500)
             FAT_init()                      # Accept FAT16 and FAT32
-            for _ in 1..3:                  # Show the information of first 3 file
+            for _ in 1..3:                  # Show the information of first 3 files.
                 searchNextFile()
 
         # Run main
@@ -525,10 +523,22 @@
         ....
         skip the rest
         ```
+    * SD card setup procedure
+        1. Format SD card using [SDFormatter](https://www.sdcard.org/downloads/formatter/)
+        program.
+        1. Copy sample files to root folder on your PC.
+
+    * FAT Filesystem reference
+        [FAT Filesystem](http://elm-chan.org/docs/fat_e.html)
+
+### Other links
+ * [Arduino for Nim](https://github.com/markspanbroek/nim-arduino)
+ * [Nim for PlatformIO](https://github.com/markspanbroek/nim-platformio)
+ * [Nim for Arduino](https://github.com/zevv/nim-arduino)
+ * [Arduino temp](https://github.com/Sinsjr2/arduino_temp)
 
 
 
-2019/01, 2021/11 by audin
 
 
 
