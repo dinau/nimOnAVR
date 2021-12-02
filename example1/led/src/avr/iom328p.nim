@@ -754,32 +754,32 @@ when not defined(AVR_IOM328P_H):
     FUSE_MEMORY_SIZE* = 3
   ##  Low Fuse Byte
   const
-    FUSE_CKSEL0* = cast[uint8](not BV(0)) ##  Select Clock Source
-    FUSE_CKSEL1* = cast[uint8](not BV(1)) ##  Select Clock Source
-    FUSE_CKSEL2* = cast[uint8](not BV(2)) ##  Select Clock Source
-    FUSE_CKSEL3* = cast[uint8](not BV(3)) ##  Select Clock Source
-    FUSE_SUT0* = cast[uint8](not BV(4)) ##  Select start-up time
-    FUSE_SUT1* = cast[uint8](not BV(5)) ##  Select start-up time
-    FUSE_CKOUT* = cast[uint8](not BV(6)) ##  Clock output
-    FUSE_CKDIV8* = cast[uint8](not BV(7)) ##  Divide clock by 8
+    FUSE_CKSEL0* = 0xFE ##  Select Clock Source
+    FUSE_CKSEL1* = 0xFD ##  Select Clock Source
+    FUSE_CKSEL2* = 0xFB ##  Select Clock Source
+    FUSE_CKSEL3* = 0xF7 ##  Select Clock Source
+    FUSE_SUT0* = 0xEF ##  Select start-up time
+    FUSE_SUT1* = 0xDF ##  Select start-up time
+    FUSE_CKOUT* = 0xBF ##  Clock output
+    FUSE_CKDIV8* = 0x7F ##  Divide clock by 8
     LFUSE_DEFAULT* = (
       FUSE_CKSEL0 and FUSE_CKSEL2 and FUSE_CKSEL3 and FUSE_SUT0 and FUSE_CKDIV8)
   ##  High Fuse Byte
   const
-    FUSE_BOOTRST* = cast[uint8](not BV(0))
-    FUSE_BOOTSZ0* = cast[uint8](not BV(1))
-    FUSE_BOOTSZ1* = cast[uint8](not BV(2))
-    FUSE_EESAVE* = cast[uint8](not BV(3)) ##  EEPROM memory is preserved through chip erase
-    FUSE_WDTON* = cast[uint8](not BV(4)) ##  Watchdog Timer Always On
-    FUSE_SPIEN* = cast[uint8](not BV(5)) ##  Enable Serial programming and Data Downloading
-    FUSE_DWEN* = cast[uint8](not BV(6)) ##  debugWIRE Enable
-    FUSE_RSTDISBL* = cast[uint8](not BV(7)) ##  External reset disable
+    FUSE_BOOTRST* = 0xFE
+    FUSE_BOOTSZ0* = 0xFD
+    FUSE_BOOTSZ1* = 0xFB
+    FUSE_EESAVE* = 0xF7 ##  EEPROM memory is preserved through chip erase
+    FUSE_WDTON* = 0xEF ##  Watchdog Timer Always On
+    FUSE_SPIEN* = 0xDF ##  Enable Serial programming and Data Downloading
+    FUSE_DWEN* = 0xBF ##  debugWIRE Enable
+    FUSE_RSTDISBL* = 0x7F ##  External reset disable
     HFUSE_DEFAULT* = (FUSE_BOOTSZ0 and FUSE_BOOTSZ1 and FUSE_SPIEN)
   ##  Extended Fuse Byte
   const
-    FUSE_BODLEVEL0* = cast[uint8](not BV(0)) ##  Brown-out Detector trigger level
-    FUSE_BODLEVEL1* = cast[uint8](not BV(1)) ##  Brown-out Detector trigger level
-    FUSE_BODLEVEL2* = cast[uint8](not BV(2)) ##  Brown-out Detector trigger level
+    FUSE_BODLEVEL0* = 0xFE ##  Brown-out Detector trigger level
+    FUSE_BODLEVEL1* = 0xFD ##  Brown-out Detector trigger level
+    FUSE_BODLEVEL2* = 0xFB ##  Brown-out Detector trigger level
     EFUSE_DEFAULT* = (0xFF)
   ##  Lock Bits
   ##  Signature

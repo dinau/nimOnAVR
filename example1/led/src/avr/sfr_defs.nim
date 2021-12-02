@@ -202,7 +202,7 @@ when not defined(AVR_SFR_DEFS_H):
       MMIO_WORD((io_addr) + SFR_OFFSET)
 
     template SFR_MEM_ADDR*(sfr: untyped): untyped =
-      ((uint16) and (sfr))
+      cast[ptr uint16](sfr)
 
     template SFR_IO_ADDR*(sfr: untyped): untyped =
       (SFR_MEM_ADDR(sfr) - SFR_OFFSET)
@@ -252,7 +252,7 @@ when not defined(AVR_SFR_DEFS_H):
     ##     Test whether bit \c bit in IO register \c sfr is set.
     ##     This will return a 0 if the bit is clear, and non-zero
     ##     if the bit is set.
-    template bit_is_set*(sfr, bit: untyped): untyped =
+    template xbit_is_set*(sfr, bit: untyped): untyped =
       (SFR_BYTE(sfr) and BV(bit))
 
     ## * \def bit_is_clear
