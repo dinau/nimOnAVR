@@ -524,9 +524,9 @@
         skip the rest
         ```
     * SD card setup procedure
-        1. Format a SD card using [SDFormatter](https://www.sdcard.org/downloads/formatter/)
+        1. Format SD card using [SDFormatter](https://www.sdcard.org/downloads/formatter/)
         program.
-        1. Copy sample files to root folder of the SC Card on your PC.
+        1. Copy sample files to root folder on your PC.
 
     * FAT Filesystem reference
         [FAT Filesystem](http://elm-chan.org/docs/fat_e.html)

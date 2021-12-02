@@ -1,0 +1,25 @@
+** License Discription **
+
+reg_utils.nim
+    This file is under MIT license, see top description of the file.
+
+sfr_defs.nim
+iom328p.nim:
+    These files were originally part of avr-gcc distribution and
+    converted to nim langugage using c2nim.
+    These files are under BSD license, see top description of the files.
+
+sd_card.nim
+fat_lib.nim:
+This file was originally part of jallib project(https://github.com/jallib/jallib) and
+    converted to nim langugage using c2nim.
+    This file is under ZLIB license, see top description of the file.
+
+xprintf.c:
+xprintf.h:
+These files are under ChaN's license(http://elm-chan.org/),
+    see top description of the files.
+
+
+All other files are under MIT license, see "LICENS" file.
+
