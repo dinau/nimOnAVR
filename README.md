@@ -129,7 +129,7 @@
         ```
         $ make w 
         ```
-        * Variable **ARDUINO_VER, COM_PORT, AVRDUDE_BAUDRATE** in **config.nims** must be properly set
+        * Constant **ARDUINO_VER, COM_PORT, AVRDUDE_BAUDRATE** in **config.nims** must be properly set
             accoding to your envionment.  
             See ./[config.nims](https://github.com/dinau/nimOnAVR/blob/main/example1/led/config.nims)
             * cf.
