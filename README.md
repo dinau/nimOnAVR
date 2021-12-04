@@ -532,13 +532,15 @@
         [FAT Filesystem](http://elm-chan.org/docs/fat_e.html)
 
 ### Other links
- * [Arduino for Nim](https://github.com/markspanbroek/nim-arduino)
- * [Nim for PlatformIO](https://github.com/markspanbroek/nim-platformio)
- * [Nim for Arduino](https://github.com/zevv/nim-arduino)
- * [Arduino temp](https://github.com/Sinsjr2/arduino_temp)
+* [Arduino for Nim](https://github.com/markspanbroek/nim-arduino)
+* [Nim for PlatformIO](https://github.com/markspanbroek/nim-platformio)
+* [Nim for Arduino](https://github.com/zevv/nim-arduino)
+* [Arduino temp](https://github.com/Sinsjr2/arduino_temp)
 
-
-
-
+### Other links: Wave player project
+* Super lite series
+    * [arduino-wave-player-pwm-super-lite-nim / Nim](https://github.com/dinau/arduino-wave-player-pwm-super-lite-nim)
+    * [wave_player_super_lite / STM32(F0,L1,F4) /  Mbed2 / C++](https://os.mbed.com/users/mimi3/code/wave_player_super_lite)
+    * [pwm_wave_player-jalv2 / PIC16F1xxx / Jal](https://github.com/dinau/pic16f-wave-palyer-pwm-super-lite)
 
 
