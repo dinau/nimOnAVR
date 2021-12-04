@@ -3,7 +3,7 @@
 - [Nim On AVR](#nim-on-avr)
     - [Nim language test program for Arduino UNO/Nano](#nim-language-test-program-for-arduino-unonano)
         - [Prerequisite](#prerequisite)
-        - [AVR Peripheral register access](#avr-peripheral-register-access)
+        - [AVR peripheral register access](#avr-peripheral-register-access)
         - [Example1](#example1)
             - [**LED blink** ](#led-blink)
             - [**nimOnArduino** ](#nimonarduino)
@@ -31,15 +31,15 @@
 * make,rm and etc Linux tool commands
 * [CMake](https://cmake.org/download/) version 3.13 or later  
 
-### AVR Peripheral register access
+### AVR peripheral register access
 * Load / Store operation
-    * Load from Peripheral register
+    * Load from peripheral register
         ```Nim
          var 
             inData1 = PORTB.v
             inData2 = PORTB.ld  # same as above
          ```
-    * Store to Peripheral register 
+    * Store to peripheral register 
         ```Nim
          PORTD.v = 123  
          PORTD.st 123   # same as above
