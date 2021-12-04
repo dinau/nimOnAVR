@@ -22,7 +22,7 @@
 ##    Nim language test program for Arduino UNO/Nano
 
 ### Prerequisite
-* [nim-1.6.0 or nim-1.4.8](https://nim-lang.org/install.html)  
+* [nim-1.6.0](https://nim-lang.org/install.html)  
     * **Important**:  
         * It must be used above nim version otherwise it won't work well.
 * avr-gcc v7.3.0 (inclued in [arduino-1.8.16 IDE](https://www.arduino.cc/en/software))  
