@@ -539,14 +539,11 @@
 * [Arduino temp](https://github.com/Sinsjr2/arduino_temp)
 
 ### Other links2
-* Wave player project
-    * Super lite series
-        * Nim language
-            * [Arduino Wave Player PWM Super Lite Nim / Nim](https://github.com/dinau/arduino-wave-player-pwm-super-lite-nim) Completed.
-            * [STM32 Wave Player PWM Super Lite Nim / STM32(F0,L1,F3,F4)  Nim](https://github.com/dinau/stm32-wave-player-pwm-super-lite-nim) Completed. Under construction.
-        * C++ language
-            * [Wave Player Super Lite / STM32(F0,L1,F4) / Mbed2 / C++](https://os.mbed.com/users/mimi3/code/wave_player_super_lite) Completed.
-        * Jal language
-            * [Pwm Wave Player Jalv2 / PIC16F1xxx / Jal](https://github.com/dinau/pic16f-wave-palyer-pwm-super-lite) Competed. Under construction.
-
-
+* Wave player project Super lite series
+    * Nim language
+        * [Arduino Wave Player PWM Super Lite Nim / Nim](https://github.com/dinau/arduino-wave-player-pwm-super-lite-nim) Completed.
+        * [STM32 Wave Player PWM Super Lite Nim / STM32(F0,L1,F3,F4)  Nim](https://github.com/dinau/stm32-wave-player-pwm-super-lite-nim) Completed. 
+    * C++ language
+        * [Wave Player Super Lite / STM32(F0,L1,F4) / Mbed2 / C++](https://os.mbed.com/users/mimi3/code/wave_player_super_lite) Completed.
+    * Jal language
+        * [Pwm Wave Player Jalv2 / PIC16F1xxx / Jal](https://github.com/dinau/16f-wave-player-pwm-super-lite-jalv2)
