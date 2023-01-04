@@ -47,8 +47,10 @@ switch "gcc.options.speed"  ,"-Os"
 --os:any
 --cpu:avr
 
+switch "threads","off" # for nim-2.0 or later
+
 # Memory manager and signal handler
---gc:arc
+--mm:arc
 switch "d","noSignalHandler"
 switch "d","useMalloc"
 

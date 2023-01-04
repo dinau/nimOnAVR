@@ -46,8 +46,10 @@ switch "gcc.options.speed"  ,"-Os"
 --os:any
 --cpu:avr
 
+switch "threads","off" # for nim-2.0 or later
+
 # Memory manager and signal handler
---gc:arc
+--mm:arc
 switch "d","noSignalHandler"
 switch "d","useMalloc"
 
@@ -110,10 +112,10 @@ task make, "Build target":
     exec "$# -O ihex -R .eeprom $#.elf $#.hex" % [OBJCOPY,target_build_path,target_build_path]
     # Generate *.lst file with source code
     var (output,res) = gorgeEx( "$# -hSC $#.elf" % [OBJDUMP,target_build_path])
-    io.writeFile(target_build_path & ".lst", output)
+    writeFile(target_build_path & ".lst", output)
     # Generate *.lst2 file without source code
     (output,res) = gorgeEx( "$# -hdC $#.elf" % [OBJDUMP,target_build_path])
-    io.writeFile(target_build_path & ".lst2", output)
+    writeFile(target_build_path & ".lst2", output)
 
 task w, "Upload to Flash":
     const AVRDUDE_EXE = toExe("avrdude")

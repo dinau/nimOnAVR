@@ -28,3 +28,4 @@ define def_clean
 
 endef
 
+MAKEFLAGS += --no-print-directory
