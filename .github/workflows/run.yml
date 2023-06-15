@@ -1,5 +1,4 @@
-# https://github.com/marketplace/actions/avr-make
-name: avr-gcc compilation
+name: avr-gcc compilation # https://github.com/marketplace/actions/avr-make
 on:
   push:
     branches: [ master ]
@@ -14,7 +13,8 @@ jobs:
         nim: [ '1.6.12', 'devel' ]
     name: Nim ${{ matrix.nim }} compilation
     steps:
-      - uses: actions/checkout@master
+      - name: Check out repository code
+        uses: actions/checkout@v3
       - name: Setup nim
         uses: jiro4989/setup-nim-action@v1
         with:
@@ -23,4 +23,5 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install avr-libc gcc-avr
-      - run: make
+      - name: Build setp
+        run: make
