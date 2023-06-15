@@ -1,5 +1,5 @@
 # https://github.com/marketplace/actions/avr-make
-name: Compilation test using avr-gcc
+name: avr-gcc compilation
 on:
   push:
     branches: [ master ]
@@ -19,4 +19,8 @@ jobs:
         uses: jiro4989/setup-nim-action@v1
         with:
           nim-version: ${{ matrix.nim }}
-      - uses: bazhenov/action-avr-make@v1.0
+      - name: Install avr-gcc
+        run: |
+          sudo apt-get update
+          sudo apt-get install avr-libc gcc-avr
+      - run: make
