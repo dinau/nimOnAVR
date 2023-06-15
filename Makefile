@@ -10,7 +10,10 @@ SAMPLE_DIRS :=	$(EX1)/led \
 				$(EX2)/intr_test \
 				$(EX2)/sd_card
 
-all: clean
+.PHONY: clean
+
+all:
+	avr-gcc --version
 	$(foreach exdir,$(SAMPLE_DIRS), $(call def_make,$(exdir) ) )
 
 clean:
@@ -19,7 +22,7 @@ clean:
 
 # definition loop funciton
 define def_make
-	@-$(MAKE) -C $(1) clean all
+	@-$(MAKE) -C $(1) all
 
 endef
 
