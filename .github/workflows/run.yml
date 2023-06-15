@@ -1,6 +1,5 @@
 # https://github.com/marketplace/actions/avr-make
-name: CI
-
+name: Compilation test using avr-gcc
 on:
   push:
     branches: [ master ]
@@ -15,9 +14,9 @@ jobs:
         nim: [ '1.6.12', 'devel' ]
     name: Nim ${{ matrix.nim }} compilation
     steps:
-    - uses: actions/checkout@master
-    - name: Setup nim
-      uses: jiro4989/setup-nim-action@v1
-      with:
-        nim-version: ${{ matrix.nim }}
-    - uses: bazhenov/action-avr-make@v1.0
+      - uses: actions/checkout@master
+      - name: Setup nim
+        uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: ${{ matrix.nim }}
+      - uses: bazhenov/action-avr-make@v1.0
